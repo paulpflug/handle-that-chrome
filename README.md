@@ -22,7 +22,7 @@ handleThatChrome = require("handle-that-chrome")
 // handleThatChrome(work:Array, options:Object)
 handleThatChrome(["work1","work2"],{
   worker: (work, tab) => {
-    // work is either work1 or work2
+    // work is either ["work1"] or ["work2"]
     {DOM, CSS, Emulation, Page} = tab
     await Promise.all [DOM.enable(), CSS.enable(), Page.enable()]
     // ...
@@ -35,7 +35,7 @@ handleThatChrome(["work1","work2"],{
 #### Options
 Name | type | default | description
 ---:| --- | ---| ---
-worker | Function | - | (required) Callback called with each workpiece
+worker | Function | - | (required) Callback called with an array of workpieces
 shuffle | Boolean | true | should the work get shuffled
 flatten | Boolean | true | the work array will be flattened
 concurrency | Number | #CPUS | how many workers should get spawned

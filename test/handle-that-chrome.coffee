@@ -9,7 +9,7 @@ test (snap) =>
   handleThatChrome([1,2,3],
     port: port()
     worker: (work, tab) =>
-      works.push work
+      works.push work[0]
       tabs[tab.target.id] = true
     onFinish: =>
       # should have piece 1,2,3
