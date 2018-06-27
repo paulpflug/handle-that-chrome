@@ -21,7 +21,7 @@ handleThatChrome = require("handle-that-chrome")
 
 // handleThatChrome(work:Array, options:Object)
 handleThatChrome(["work1","work2"],{
-  worker: (work, tab) => {
+  worker: (work, tab, currentIndex) => {
     // work is either ["work1"] or ["work2"]
     {DOM, CSS, Emulation, Page} = tab
     await Promise.all [DOM.enable(), CSS.enable(), Page.enable()]
