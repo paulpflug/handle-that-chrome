@@ -32,4 +32,10 @@ test (snap) =>
     # should call onProgress after processing one piece
     onProgress: (piece) => snap obj: piece
 
-   
+test (snap) =>
+  indices = []
+  handleThatChrome [1,2],
+    port: port()
+    worker: (work, tab, index) => indices.push index
+    # should have 1,2
+    onFinish: => snap obj: indices.sort()

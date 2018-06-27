@@ -38,11 +38,10 @@ module.exports = (work, options) => new Promise (resolve, reject) =>
     next = =>
       pieces = work.pop()
       if pieces
-        current += pieces.length
         tab = await remoteInterface.New port: port
         rI = await remoteInterface target: tab, port: port 
         try
-          await getItDone(pieces, rI, current)
+          await getItDone(pieces, rI, current += pieces.length)
         catch e
           if options.onError?
             options.onError(e)
