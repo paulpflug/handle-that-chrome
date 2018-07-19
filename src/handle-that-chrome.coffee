@@ -1,10 +1,17 @@
 {processWork} = require "handle-that"
 
-{launch} = require "chrome-launcher"
+chromeLauncher = require "chrome-launcher"
 remoteInterface = require "chrome-remote-interface"
 
-module.exports.launch = (options) => await launch port: options.port or 9222, chromeFlags: options.flags
+module.exports.launch = launch = (options={}) => 
+  options.port ?= 9222
+  options.chromeFlags ?= [
+    "--disable-gpu"
+    "--headless"
+  ]
+  await chromeLauncher.launch options
 
+module.exports.chromeLauncher = chromeLauncher
 
 module.exports = (work, options) => new Promise (resolve, reject) =>
   reject new Error "handle-that-chrome: no worker defined" unless (getItDone = options?.worker)
@@ -22,22 +29,10 @@ module.exports = (work, options) => new Promise (resolve, reject) =>
     resolve()
   if (total = remaining) > 0
     current = 0
-    port = options.port or 9222
-    options.flags ?= [
-      "--no-first-run"
-      "--disable-translate"
-      "--disable-background-networking"
-      "--disable-extensions"
-      "--disable-sync"
-      "--metrics-recording-only"
-      "--disable-default-apps"
-      "--disable-gpu"
-      "--headless"
-    ]
-    instance = options.instance ?= await launch port: port, chromeFlags: options.flags
+    {port} = instance = options.instance ?= await launch options.chrome
     next = =>
       pieces = work.pop()
-      if pieces
+      if pieces?
         tab = await remoteInterface.New port: port
         rI = await remoteInterface target: tab, port: port 
         try

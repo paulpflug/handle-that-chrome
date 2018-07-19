@@ -43,22 +43,18 @@ onProgress | Function | - | will be called on progress with the remaining work c
 onError | Function | - | will be called on error in your worker function
 onFinish | Function | - | will be called once all work is done
 instance | Object | - | you can pass a existing chrome instance, this won't be closed onFinish
-port | Number | 9222 | Port for the remote interface
-flags | Array | see below | flags used to start chrome
+chrome | Object | {} | Launch options for chrome (https://github.com/GoogleChrome/chrome-launcher)
+chrome.port | Number | 9222 | Port for the remote interface
+chrome.chromeFlags | Array | see below | flags used to start chrome
 
 ```js
 // default flags
 [
-  "--no-first-run"
-  "--disable-translate"
-  "--disable-background-networking"
-  "--disable-extensions"
-  "--disable-sync"
-  "--metrics-recording-only"
-  "--disable-default-apps"
   "--disable-gpu"
   "--headless"
 ]
+// plus these set by chrome-launcher
+// https://github.com/GoogleChrome/chrome-launcher/blob/master/src/flags.ts
 ```
 
 #### Example with ora

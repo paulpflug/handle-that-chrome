@@ -7,7 +7,7 @@ test (snap) =>
   works = []
   tabs = {}
   handleThatChrome([1,2,3],
-    port: port()
+    chrome: port: port()
     worker: (work, tab) =>
       works.push work[0]
       tabs[tab.target.id] = true
@@ -20,14 +20,14 @@ test (snap) =>
 
 test (snap) =>
   handleThatChrome [1], 
-    port: port()
+    chrome: port: port()
     # should catch test error
     onError: (e) => snap obj: e
     worker: => throw new Error "test error"
 
 test (snap) =>
   handleThatChrome [1,2],
-    port: port()
+    chrome: port: port()
     worker: =>
     # should call onProgress after processing one piece
     onProgress: (piece) => snap obj: piece
@@ -35,7 +35,7 @@ test (snap) =>
 test (snap) =>
   indices = []
   handleThatChrome [1,2],
-    port: port()
+    chrome: port: port()
     worker: (work, tab, index) => indices.push index
     # should have 1,2
     onFinish: => snap obj: indices.sort()
